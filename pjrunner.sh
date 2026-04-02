@@ -137,7 +137,7 @@ case $1 in
     update)
         echo "--- Controllo aggiornamenti su GitHub ---"
         # URL RAW del tuo script su GitHub
-        REPO_URL="https://github.com/Biziol/project-runner.git/Dev/pjrunner.sh"
+        REPO_URL="https://github.com/Biziol/project-runner/blob/Dev/pjrunner.sh"
         
         # Scarica la nuova versione sovrascrivendo quella attuale
         if sudo curl -fsSL "$REPO_URL" -o "/usr/local/bin/run"; then
