@@ -24,7 +24,7 @@ check_dependencies() {
 # --- 2. LOGICA DI INSTALLAZIONE DELLO SCRIPT ---
 INSTALL_DIR="/usr/local/bin"
 SCRIPT_NAME="pjrunner"
-REPO_URL="https://github.com/Biziol/project-runner/blob/Dev/pjrunner.sh"
+REPO_URL="https://raw.githubusercontent.com/Biziol/project-runner/Dev/pjrunner.sh"
 
 echo "Avvio installazione di $SCRIPT_NAME..."
 
