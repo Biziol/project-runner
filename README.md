@@ -18,7 +18,7 @@ Permette di gestire più azioni (backend, frontend, database, ecc.) all'interno 
 Puoi installare PJRunner eseguendo il seguente comando nel tuo terminale:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Biziol/project-runner/Dev/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/Biziol/project-runner/main/install.sh | bash
 ```
 
 > **Nota**: L'installer verificherà e installerà automaticamente le dipendenze necessarie (`jq` e `tmux`) dopo aver chiesto il tuo permesso.
