@@ -101,6 +101,31 @@ edit_project() {
     fi
 }
 
+# --- FUNZIONE: DELETE PROGETTO ---
+delete_project() {
+    if ! list_projects; then return 1; fi
+    
+    echo ""
+    read -e -p "Inserisci l'ID del progetto da ELIMINARE: " ID
+    
+    # Verifica se il progetto esiste
+    if [ "$(jq ".\"$ID\"" "$CONFIG_FILE")" == "null" ]; then
+        echo -e "\033[1;31mErrore: Progetto '$ID' non trovato.\033[0m"
+        return 1
+    fi
+
+    # Richiesta di conferma
+    echo -e "\033[1;33mATTENZIONE:\033[0m L'azione non sarà reversibile."
+    read -p "Procedere con l'eliminazione di '$ID'? (y/n): " CONFERMA
+    if [[ "$CONFERMA" =~ ^[Yy]$ ]]; then
+        # Usa jq per eliminare la chiave specifica (del(."chiave"))
+        jq "del(.\"$ID\")" "$CONFIG_FILE" > "${CONFIG_FILE}.tmp" && mv "${CONFIG_FILE}.tmp" "$CONFIG_FILE"
+        echo -e "\033[1;32mProgetto '$ID' eliminato correttamente.\033[0m"
+    else
+        echo "Eliminazione annullata."
+    fi
+}
+
 # --- FUNZIONE: ESEGUI PROGETTO ---
 execute_project() {
     local ID=$1
@@ -156,6 +181,9 @@ check_dependencies
 [ ! -f "$CONFIG_FILE" ] && echo "{}" > "$CONFIG_FILE"
 
 case $1 in
+    list)
+        list_projects
+        ;;
     add)
         read -p "ID Progetto (es: roadmap): " NEW_ID
         configure_actions "$NEW_ID"
@@ -163,8 +191,8 @@ case $1 in
     edit)
         edit_project
         ;;
-    list)
-        list_projects
+    delete)
+        delete_project
         ;;
     update)
         echo "Aggiornamento in corso..."
@@ -176,6 +204,6 @@ case $1 in
             echo "Errore aggiornamento."; exit 1
         fi
         ;;
-    "") echo "Uso: pjrunner [id] | list | add | edit | update" ;;
+    "") echo "Uso: pjrunner [id] | list | add | edit | delete | update" ;;
     *)  execute_project "$1" ;;
 esac
