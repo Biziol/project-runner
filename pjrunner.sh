@@ -168,7 +168,7 @@ case $1 in
         ;;
     update)
         echo "Aggiornamento in corso..."
-        REPO_URL="https://raw.githubusercontent.com/Biziol/project-runner/Dev/pjrunner.sh"
+        REPO_URL="https://raw.githubusercontent.com/Biziol/project-runner/main/pjrunner.sh"
         if sudo curl -fsSL "$REPO_URL" -o "/usr/local/bin/pjrunner"; then
             sudo chmod +x /usr/local/bin/pjrunner
             echo "Aggiornamento completato!"
