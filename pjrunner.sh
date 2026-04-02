@@ -95,7 +95,7 @@ execute_project() {
     local PROGETTO_DATA=$(jq -r ".\"$ID\"" "$CONFIG_FILE")
 
     if [ "$PROGETTO_DATA" == "null" ]; then
-        echo "Errore: Progetto '$ID' non trovato. Usa 'run add' per crearlo."
+        echo "Errore: Progetto '$ID' non trovato. Usa 'pjrunner add' per crearlo."
         exit 1
     fi
 
@@ -134,6 +134,22 @@ execute_project() {
 # --- MAIN ---
 case $1 in
     add) add_project ;;
-    "")  echo "Uso: run [id] o run add" ;;
+    update)
+        echo "--- Controllo aggiornamenti su GitHub ---"
+        # URL RAW del tuo script su GitHub
+        REPO_URL="https://github.com/Biziol/project-runner.git/Dev/pjrunner.sh"
+        
+        # Scarica la nuova versione sovrascrivendo quella attuale
+        if sudo curl -fsSL "$REPO_URL" -o "/usr/local/bin/run"; then
+            sudo chmod +x /usr/local/bin/run
+            echo "Aggiornamento completato con successo!"
+        else
+            echo "Errore durante l'aggiornamento. Verifica la connessione o il link."
+            exit 1
+        fi
+        ;;
+    "")
+        echo "Uso: run [id] | run add | run update"
+        ;;
     *)   execute_project "$1" ;;
 esac
